@@ -1,0 +1,179 @@
+
+/*Step 1. With this code block, I'm animating the logo so that is slowly appears and grows when the user opens up the page. I learned that animation in CSS is a transition between percentages, so I simply had to set the 0% as the original width and 100% as the full width. To best mimic the animation from the example, I chose to use  the ease-in-out timing to do the slow, rapid, and then slow growth animation.*/
+
+
+#logo {
+    animation: logo 5s ease-in-out;
+}
+
+@keyframes logo {
+0%{
+    width: 25px;
+    opacity: 0;
+}
+100% { width: 475px;
+    opacity: 1;
+}
+}
+
+
+ /*Step 2. I'm changing the body element into a Poppins font. I am also adding a background image, with a backup color. */
+ body {
+    font-family: "Poppins", serif;
+    background-image: url("../images/concrete_seamless.png");
+    background-color: #f1f1f1;
+ }
+
+ /*Step 3. Edited the header tag so that all instances use flex, and that they have the same direction and orientation as the example.*/ 
+header { display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+/*Step 4.  Editing the css for the nav_links class so that the class uses flex. */
+.nav_links {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Step 5. My goal was to make the links the same color even after they were visited. In the example, the links appeared to be blue. Upon inspect I saw the color was "-webkit-link", but I didn't know how to handle that. Instead I went with my inutition and made the link blue, and made the pseudo-class for a visited link also blue.  */
+
+a {
+    color: blue;
+}
+
+a:visited {
+    color: blue;
+}
+
+/*Step 6. Styling the direct children of the card class so that they have a noticeable, solid background, a border, rounded corners, and significant interior padding. I also adjusted the card class so that the top corner radii  of the white background would match the header adjustments.*/
+.card {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.card > header {
+
+    background: #288088;
+    border: solid 2px #45ADAD;
+    padding: 20px 0;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+
+}
+
+
+/*Steps 7 - 8.  Used flex-basis to ensure the card starts at a size of 450px. The pricing element surrounding the cards oriented in centralized row, which will collapse into a single column as the window shrinks. */
+.card{
+    flex-basis: 450px;
+ }
+
+ .pricing {
+ display:flex;
+ flex-flow: row wrap;
+ justify-content: center;
+}
+
+/*Step 9. I added 10px solid bluegreen border around each child image of the gallery class. I also arrannged the width to be 300px as specified in the instructions, and used the margin property to add 10px of space around the entire image.*/
+.gallery > img {
+    border: solid #50c7c7 10px;
+    margin: 10px;
+    width: 300px;
+}
+
+/*Step 10. Based on the 1200px and 1500px width images, it was clear that the items within the gallery where arranged to favour columns instead of rows. I added the flex-direction to specify rows. I also used the justify content property to keep the images centered, and to mimic the look of the rows collapsing into a column, I set the flex-wrap property to wrap.*/
+.gallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/*Created a breakpoint at 900px to accomodate the tablet view of the site..*/
+
+
+@media screen and (min-width: 900px) {
+    /*Step 11. Used justify-content to space the logo and the nav apart. Used space-between because the elements on the image appeared to be as far from one another as possible. Since nav-links were organized in rows on the photos, I change dthe flex-direction to be rows.*/
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+.nav_links {
+    flex-direction: row;
+
+}
+/*Step 12. Mimicking the example was tricky. Like the previous card class, I knew I needed the basis - which reflects width - to be 275px. To match the uneven heights of the example image, I made sure that the container elements within pricing would be aligned by their center, and that their height would would adjust to the amount of content withint them. */
+
+
+.pricing {
+    align-items: center;
+}
+
+.card {
+    flex-basis: 275px;
+    height:fit-content;
+}
+
+/*Step 13. This code is meant to keep the header'stuck' to the top as the user scrolls down. I chose sticky rather than fixed because fixed left the element disjointed from the top. To target this header, I used the body as a reference for a child selector, since this header would be the first to appear. */
+
+body > header:first-child  {
+    position: sticky;
+    top: 0px;
+}
+}
+
+/*Step 14. To accomodate thosse who prefer reduced motion, I simply added a media query for reduced-motion and made sure the logo tag had an animation setting of 'none' to turn it off.*/
+@media (prefers-reduced-motion) {
+#logo {
+    animation: none;
+}
+
+}
+
+/* Steps 15 - 16. After setting a media query to target the print state of the page, I used the font-family element to change the body to Arial, with Helvetica also mentioned as a backup. Removing the background image was simply a matter of changing the background-image to none. */
+@media print {
+  body {
+    font-family:Arial, Helvetica;
+    background-image: none; }
+
+    /* Step 17.a. By making the width 100%, I cake sure the links span the full wdith of the page */
+ nav {
+        width: 100%;
+    }
+
+    /*Step 17.b. By setting the flex-direction to row, I align the links horizontally. Mimicking the spacing of the example was tricky, but space-around seemed to best resemble the image. */
+    .nav_links {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* Step 18. To make sure that all elements aligned with one another, I set both their 'cards' and the text within to align at the end of the flex item. To ensure they all were on the same line, I made sure to override the flex-wrap so that they would no longer wrap. */
+    .pricing {
+        align-items: flex-end;
+        align-content: flex-end;
+        flex-wrap: nowrap;
+    }
+
+/* Step 19. This step was straight forward, requiring only a border and a flex-basis. */
+    .card {
+        flex-basis: 325px;
+        border: solid #45addd 2px;
+    }
+
+    /* Step 20. To make sure the gallery would completely disappear and not leave any of the space it would have occupied, I used the none option on display. Since the header wasn't included in the gallery class, I made sure to also add the ID "header" so that all elements of the gallery would be removed.*/
+    .gallery, #gallery {
+        display: none;
+    }
+
+    /* Step 21. To consistently place a thumbs up icon after the second line in each card element, I targeted first the class, then the immediate undoerderled list child, then psuedo-class to target the precise element. Since I couldn't tweak the HTML, I couldn't include a font-awesome icon. So I found a resource  online  - https://dev.to/beumsk/how-to-add-emoji-s-in-your-website-using-html-css-or-javascript-4g6g#:~:text=In%20CSS%20you%20need%20to,the%20Emoji%20as%20the%20value.&text=The%20same%20way%2C%20you%20can,codepoint%20replacing%20U%2B%20with%20%5C0%20.-
+ which explained how I could add an icon via unicode.  From there I simply input the unicode into the content property.
+    */
+    .card > ul li:nth-child(2)::after {
+        content: "\01F44D";
+    }
+
+    }
+
+
